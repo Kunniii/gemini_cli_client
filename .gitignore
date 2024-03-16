@@ -21,3 +21,6 @@
 go.work
 
 vendor/
+venv
+__pycache__
+gemini_client

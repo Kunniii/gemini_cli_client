@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"log"
 	"os"
 	"strings"
 
@@ -19,13 +19,15 @@ func loadAPIKey() string {
 		fmt.Print("Please enter your API key: ")
 		bytePassword, _ := term.ReadPassword(0)
 		key := string(bytePassword)
-		ioutil.WriteFile(keyFilePath, []byte(key), 0600)
+		if err := os.WriteFile(keyFilePath, []byte(key), 0600); err != nil {
+			log.Fatal(err)
+		}
 		fmt.Println()
 		return key
 	}
 
 	// Read the API key from file
-	key, _ := ioutil.ReadFile(keyFilePath)
+	key, _ := os.ReadFile(keyFilePath)
 	return strings.TrimSpace(string(key))
 }
 
